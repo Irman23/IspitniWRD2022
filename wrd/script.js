@@ -142,22 +142,25 @@ ponuda();
 
 function post()
 {
-    let btn = document.querySelector('.button');
+    document.querySelector('.button').addEventListener('submit',e=>{
+        e.preventDefault();
     
+        var z = new Object();
 
 
-        obj = {
 
         
-          destinacijaID : document.getElementById('destinacija').value,
-          ime : document.getElementById('first-name').value,
-          prezime : document.getElementById('last-name').value,
-          poruka : document.getElementById('poruka').value,
-          email : document.getElementById('email').value,
-          telefon : document.getElementById('phone').value
-        }
 
-        var strJson = JSON.stringify(obj);
+        
+          z.destinacijaID = document.getElementById('destinacija').value;
+          z.ime = document.getElementById('first-name').value;
+          z.prezime = document.getElementById('last-name').value;
+          z.poruka = document.getElementById('poruka').value;
+          z.email = document.getElementById('email').value;
+          z.telefon = document.getElementById('phone').value;
+        
+
+        var strJson = JSON.stringify(z);
 
 
 
@@ -168,21 +171,15 @@ function post()
                     },
                     body: strJson,
                 })
-                    .then((r) => {
-                        if (r.status != 200) {
-                            alert("Server javlja gresku: " + r.status);
-                            return;
-                        }
-
-                        r.json().then(obj => {
-                            btn.addEventListener("click", but=()=>{
-                            alert("Objekat uspješno dodan ");
-                            });
-                        });
+                    .then(response=>response.json())
+                    .then(obj=>{
+                        alert('Objekat uspješno dodan !');
+                        console.log('radi !!!');
                     })
                     .catch((error) => {
                         console.error('Error:', error);
                     });
+    });
 }
 
 post();
